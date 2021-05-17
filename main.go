@@ -1,11 +1,14 @@
 package main
 
 import (
-	"net/http"
 	"flag"
+	"fmt"
+	"net/http"
 
 	"github.com/amalaruja/go-hello-rest/service"
 )
+
+const apiPrefix = "/hello-rest-service/"
 
 func main() {
 	namePtr := flag.String("name", "DC 1", "Name")
@@ -13,6 +16,6 @@ func main() {
 
 	helloService := service.Hello{Message: *namePtr}
 
-    http.HandleFunc("/hello", helloService.SayHello)
-    http.ListenAndServe(":8080", nil)
+	http.HandleFunc(fmt.Sprintf("%s%s", apiPrefix, "hello"), helloService.SayHello)
+	http.ListenAndServe(":8080", nil)
 }
